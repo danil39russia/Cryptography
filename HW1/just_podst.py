@@ -3,12 +3,14 @@ english_alphabet = 'abcdefghijklmnopqrstufvxyz'
 russian_alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
 
 def encode(plain_text, key):
+    """encode plain_text and return encryption_text"""
     encryption_text = ''
     for i in range (0, len(plain_text)):
         encryption_text += key[alphabet_text.find(plain_text[i])]
     return encryption_text
 
 def decode(plain_text, key):
+    """decode plain_text and return decryption_text"""
     decryption_text = ''
     for i in range (0, len(plain_text)):
         decryption_text += alphabet_text[key.find(plain_text[i])]
@@ -23,6 +25,7 @@ if __name__ == '__main__':
     else:
         print("\nОшибка, неизвестный алфавит")
         exit()
+
     operation = input('\n[1] Зашифрование или [2] Расшифрование\nВведите цифру нужной операции: ')
     if operation == '1':
         plain_text = input('\nВведите открытый текст: \n')
