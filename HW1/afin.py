@@ -70,3 +70,4 @@ while __name__ == '__main__':
     else:
         plain_text = input('\nВведите шифр текст: \n')
         print(decode(plain_text, key[0], key[1]))
+        test
