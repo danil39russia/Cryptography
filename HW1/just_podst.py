@@ -35,4 +35,5 @@ if __name__ == '__main__':
         plain_text = input('\nВведите шифр текст: \n')
         key = input(f'\nВведите ключ:\n{alphabet_text}\n')
         print(f'\nполученный открытый текст:\n{decode(plain_text, key)}')
-    else: print("\nОшибка, неизвестная операция")
+    else:
+        print("\nОшибка, неизвестная операция")
