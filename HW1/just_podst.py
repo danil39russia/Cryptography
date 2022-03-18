@@ -1,5 +1,5 @@
 
-english_alphabet = 'abcdefghijklmnopqrstufvxyz'
+english_alphabet = 'abcdefghijklmnopqrstuvwxyz'
 russian_alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
 alphabet_text = ''
 
