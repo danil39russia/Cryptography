@@ -1,20 +1,24 @@
 
 english_alphabet = 'abcdefghijklmnopqrstufvxyz'
 russian_alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+alphabet_text = ''
 
-def encode(plain_text, key):
-    """encode plain_text and return encryption_text"""
+
+def encode(text_to_encode, encode_key):
+    """encode text_to_encode and return encryption_text"""
     encryption_text = ''
-    for i in range (0, len(plain_text)):
-        encryption_text += key[alphabet_text.find(plain_text[i])]
+    for i in range(0, len(text_to_encode)):
+        encryption_text += encode_key[alphabet_text.find(text_to_encode[i % len(alphabet_text)])]
     return encryption_text
 
-def decode(plain_text, key):
-    """decode plain_text and return decryption_text"""
+
+def decode(text_to_decode, decode_key):
+    """decode text_to_decode and return decryption_text"""
     decryption_text = ''
-    for i in range (0, len(plain_text)):
-        decryption_text += alphabet_text[key.find(plain_text[i])]
+    for i in range(0, len(text_to_decode)):
+        decryption_text += alphabet_text[decode_key.find(text_to_decode[i % len(alphabet_text)])]
     return decryption_text
+
 
 if __name__ == '__main__':
     language = input('\n[1] Русский алфавит или [2] Английский алфавит \nВведите цифру нужного алфавита: ')
