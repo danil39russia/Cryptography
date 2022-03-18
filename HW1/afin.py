@@ -25,6 +25,7 @@ def decode(text_to_decode: str, decode_key: list) -> str:
 
 
 def euclid_alg(a: int, p: int) -> str:
+    """return modular inverse of A mod P"""
     y2 = 0
     y1 = 1
     if a > p:

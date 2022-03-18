@@ -4,7 +4,7 @@ russian_alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыь
 alphabet_text = ''
 
 
-def encode(text_to_encode, encode_key):
+def encode(text_to_encode: str, encode_key: str):
     """encode text_to_encode and return encryption_text"""
     encryption_text = ''
     for i in range(0, len(text_to_encode)):
@@ -12,7 +12,7 @@ def encode(text_to_encode, encode_key):
     return encryption_text
 
 
-def decode(text_to_decode, decode_key):
+def decode(text_to_decode: str, decode_key: str):
     """decode text_to_decode and return decryption_text"""
     decryption_text = ''
     for i in range(0, len(text_to_decode)):
