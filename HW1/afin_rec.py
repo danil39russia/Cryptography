@@ -12,6 +12,7 @@ def encode(text_to_encode: str, encode_key_a: list, encode_key_b: list) -> str:
         if i > 1:
             encode_key_a.append((encode_key_a[i - 1] * encode_key_a[i - 2]) % len(alphabet_text))
             encode_key_b.append((encode_key_b[i - 1] + encode_key_b[i - 2]) % len(alphabet_text))
+
         if alphabet_text.find(text_to_encode[i]) != -1:
             encryption_text += alphabet_text[((encode_key_a[i] * alphabet_text.find(text_to_encode[i])
                                                + encode_key_b[i]) % len(alphabet_text))]
@@ -30,6 +31,7 @@ def decode(text_to_decode: str, decode_key_a: list, decode_key_b: list) -> str:
             decode_key_b.append((decode_key_b[i - 1] + decode_key_b[i - 2]) % len(alphabet_text))
         else:
             decode_key_a[i] = euclid_alg(decode_key_a[i], len(alphabet_text))
+
         if alphabet_text.find(text_to_decode[i]) != -1:
             decryption_text += alphabet_text[((alphabet_text.find(text_to_decode[i]) - decode_key_b[i])
                                           * decode_key_a[i]) % len(alphabet_text)]
@@ -56,6 +58,7 @@ def euclid_alg(a: int, p: int) -> int:
         a = r
         y2 = y1
         y1 = y
+
     return y2
 
 

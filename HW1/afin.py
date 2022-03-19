@@ -14,6 +14,7 @@ def encode(text_to_encode: str, encode_key: list) -> str:
                                               % len(alphabet_text))]
         else:
             encryption_text += '?'
+
     return encryption_text
 
 
@@ -27,6 +28,7 @@ def decode(text_to_decode: str, decode_key: list) -> str:
                                              % len(alphabet_text)]
         else:
             decryption_text += '?'
+
     return decryption_text
 
 
@@ -47,6 +49,7 @@ def euclid_alg(a: int, p: int) -> str:
         a = r
         y2 = y1
         y1 = y
+
     return y2
 
 

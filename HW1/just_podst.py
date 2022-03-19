@@ -9,6 +9,7 @@ def encode(text_to_encode: str, encode_key: str):
     encryption_text = ''
     for i in range(0, len(text_to_encode)):
         encryption_text += encode_key[alphabet_text.find(text_to_encode[i % len(alphabet_text)])]
+
     return encryption_text
 
 
@@ -17,6 +18,7 @@ def decode(text_to_decode: str, decode_key: str):
     decryption_text = ''
     for i in range(0, len(text_to_decode)):
         decryption_text += alphabet_text[decode_key.find(text_to_decode[i % len(alphabet_text)])]
+
     return decryption_text
 
 
