@@ -12,8 +12,12 @@ def encode(text_to_encode: str, encode_key_a: list, encode_key_b: list) -> str:
         if i > 1:
             encode_key_a.append((encode_key_a[i - 1] * encode_key_a[i - 2]) % len(alphabet_text))
             encode_key_b.append((encode_key_b[i - 1] + encode_key_b[i - 2]) % len(alphabet_text))
-        encryption_text += alphabet_text[((encode_key_a[i] * alphabet_text.find(text_to_encode[i])
-                                           + encode_key_b[i]) % len(alphabet_text))]
+        if alphabet_text.find(text_to_encode[i]) != -1:
+            encryption_text += alphabet_text[((encode_key_a[i] * alphabet_text.find(text_to_encode[i])
+                                               + encode_key_b[i]) % len(alphabet_text))]
+        else:
+            encryption_text += '?'
+
     return encryption_text
 
 
@@ -26,8 +30,12 @@ def decode(text_to_decode: str, decode_key_a: list, decode_key_b: list) -> str:
             decode_key_b.append((decode_key_b[i - 1] + decode_key_b[i - 2]) % len(alphabet_text))
         else:
             decode_key_a[i] = euclid_alg(decode_key_a[i], len(alphabet_text))
-        decryption_text += alphabet_text[((alphabet_text.find(text_to_decode[i]) - decode_key_b[i])
+        if alphabet_text.find(text_to_decode[i]) != -1:
+            decryption_text += alphabet_text[((alphabet_text.find(text_to_decode[i]) - decode_key_b[i])
                                           * decode_key_a[i]) % len(alphabet_text)]
+        else:
+            decryption_text += '?'
+
     return decryption_text
 
 
@@ -71,11 +79,10 @@ if __name__ == '__main__':
                       f'взаимнопросты с числом {len(alphabet_text)}\n').split()
     key = [(int(item) % len(alphabet_text)) for item in first_key]
 
-    if (math.gcd(key[0], len(alphabet_text)) != 1) or \
+    if (len(key) != 4 or math.gcd(key[0], len(alphabet_text)) != 1) or \
             ((key[1] != 0) and (math.gcd(key[1], len(alphabet_text)) != 1)) or \
             (math.gcd(key[2], len(alphabet_text)) != 1) or \
-            ((key[3] != 0) and (math.gcd(key[3], len(alphabet_text)) != 1)) \
-            or len(key) != 4:
+            ((key[3] != 0) and (math.gcd(key[3], len(alphabet_text)) != 1)):
         print("\nОшибка, неверные ключи")
         exit()
 

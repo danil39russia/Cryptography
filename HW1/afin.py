@@ -9,8 +9,11 @@ def encode(text_to_encode: str, encode_key: list) -> str:
     """encode text_to_encode and return encryption_text"""
     encryption_text = ''
     for i in range(0, len(text_to_encode)):
-        encryption_text += alphabet_text[((encode_key[0] * alphabet_text.find(text_to_encode[i]) + encode_key[1])
-                                          % len(alphabet_text))]
+        if alphabet_text.find(text_to_encode[i]) != -1:
+            encryption_text += alphabet_text[((encode_key[0] * alphabet_text.find(text_to_encode[i]) + encode_key[1])
+                                              % len(alphabet_text))]
+        else:
+            encryption_text += '?'
     return encryption_text
 
 
@@ -18,9 +21,12 @@ def decode(text_to_decode: str, decode_key: list) -> str:
     """decode text_to_decode and return decryption_text"""
     decryption_text = ''
     for i in range(0, len(text_to_decode)):
-        decryption_text += alphabet_text[((alphabet_text.find(text_to_decode[i]) - decode_key[1])
-                                          * euclid_alg(decode_key[0], len(alphabet_text)))
-                                         % len(alphabet_text)]
+        if alphabet_text.find(text_to_decode[i]) != -1:
+            decryption_text += alphabet_text[((alphabet_text.find(text_to_decode[i]) - decode_key[1])
+                                              * euclid_alg(decode_key[0], len(alphabet_text)))
+                                             % len(alphabet_text)]
+        else:
+            decryption_text += '?'
     return decryption_text
 
 
