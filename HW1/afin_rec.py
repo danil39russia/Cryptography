@@ -77,21 +77,18 @@ if __name__ == '__main__':
         print("\nОшибка, неизвестная операция")
         exit()
 
-    first_key = input(f'\nВведите сначала первую пару ключей через пробел, затем вторую'
-                      f'\nчисловые значения ключа должны быть '
-                      f'взаимнопросты с числом {len(alphabet_text)}\n').split()
+    first_key = input(f'\nВведите два ключа, каждый из которых состоит из двух чисел, через пробел'
+                      f'\nпри этом первое числовое значение ключа должно быть '
+                      f'взаимнопростым с числом {len(alphabet_text)}\n').split()
     key = [(int(item) % len(alphabet_text)) for item in first_key]
 
-    if (len(key) != 4 or math.gcd(key[0], len(alphabet_text)) != 1) or \
-            ((key[1] != 0) and (math.gcd(key[1], len(alphabet_text)) != 1)) or \
-            (math.gcd(key[2], len(alphabet_text)) != 1) or \
-            ((key[3] != 0) and (math.gcd(key[3], len(alphabet_text)) != 1)):
+    if (len(key) != 4 or math.gcd(key[0], len(alphabet_text)) != 1) or (math.gcd(key[2], len(alphabet_text)) != 1):
         print("\nОшибка, неверные ключи")
         exit()
 
     if operation == 1:
         plain_text = input(f'\nВведите открытый текст, состоящий из символов "{alphabet_text}": \n')
-        print(f'полученный шифр текст:\n{encode(plain_text, key[::2], key[1::2])}')
+        print(f'\nПолученный шифр текст:\n{encode(plain_text, key[::2], key[1::2])}')
     else:
         plain_text = input(f'\nВведите шифр текст, состоящий из символов "{alphabet_text}":\n')
-        print(f'полученный открытый текст:\n{decode(plain_text, key[::2], key[1::2])}')
+        print(f'\nПолученный открытый текст:\n{decode(plain_text, key[::2], key[1::2])}')

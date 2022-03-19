@@ -68,13 +68,11 @@ if __name__ == '__main__':
         print("\nОшибка, неизвестная операция")
         exit()
 
-    first_key = input(f'\nВведите ключ состоящий из двух цифр через пробел,\nчисловые значения '
-                      f'ключа должны быть взаимнопросты с {len(alphabet_text)}\n').split()
+    first_key = input(f'\nВведите ключ состоящий из двух чисел через пробел,\nпервое числовое значение '
+                      f'ключа должно быть взаимнопростым с {len(alphabet_text)}\n').split()
     key = [(int(item) % len(alphabet_text)) for item in first_key]
 
-    if (math.gcd(key[0], len(alphabet_text)) != 1) or \
-            ((key[1] != 0) and (math.gcd(key[1], len(alphabet_text)) != 1)) \
-            or len(key) != 2:
+    if (len(key) != 2) or (math.gcd(key[0], len(alphabet_text)) != 1):
         print("\nОшибка, неверные ключи")
         exit()
 
