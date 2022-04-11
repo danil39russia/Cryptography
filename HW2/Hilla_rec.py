@@ -1,9 +1,12 @@
+import math
+
 import numpy as np
 
 english_alphabet = 'abcdefghijklmnopqrstuvwxyz'
 russian_alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
 alphabet_text = ''
-
+key = []
+obr = []
 
 def text_to_num(text):
     num_text = []
@@ -28,27 +31,6 @@ def num_to_text(num):
     return text
 
 
-def euclid_alg(a: int, p: int) -> int:
-    """return modular inverse of A mod P"""
-    y2 = 0
-    y1 = 1
-    if a > p:
-        c = a
-        a = p
-        p = c
-    r = None
-    while r != 0:
-        q = p // a
-        r = p % a
-        y = y2 - q * y1
-        p = a
-        a = r
-        y2 = y1
-        y1 = y
-
-    return y2
-
-
 def encode(text_to_encode: str) -> str:
     """encode text_to_encode and return encryption_text"""
     encryption_text = ''
@@ -56,9 +38,11 @@ def encode(text_to_encode: str) -> str:
     while (block_len*i) + block_len <= len(text_to_encode):
         text_block = text_to_num(text_to_encode[(block_len*i):(block_len*i) + block_len])
         matrix_text = np.matrix(text_block).T
-        num = key.dot(matrix_text.astype(int))
+        if i > 1:
+            key.append(key[i-2].dot(key[i-1]))
+        num = key[i].dot(matrix_text.astype(int))%len(alphabet_text)
         encryption_text += num_to_text(num)
-        i+=1
+        i += 1
     return encryption_text
 
 
@@ -66,11 +50,16 @@ def decode(text_to_decode: str) -> str:
     """decode text_to_decode and return decryption_text"""
     decryption_text = ''
     i = 0
+    obr.append(np.linalg.inv(key[0]))
+    obr.append(np.linalg.inv(key[1]))
     while (block_len*i) + block_len <= len(text_to_decode):
         text_block = text_to_num(text_to_decode[(block_len*i):(block_len*i) + block_len])
         matrix_text = np.matrix(text_block).T
-        obr = np.linalg.inv(key)
-        num = obr.dot(matrix_text.astype(float))
+        if i > 1:
+            key.append(key[i-2].dot(key[i-1]))
+            obr.append(np.linalg.inv(key[i]))
+            #obr.append(obr[i-2].dot(obr[i-1]))
+        num = obr[i].dot(matrix_text.astype(float))
         decryption_text += num_to_text(num)
         i += 1
     return decryption_text
@@ -91,15 +80,31 @@ if __name__ == '__main__':
         print("\nОшибка, неизвестная операция")
         exit()
 
-    first_key = input(f'\nВведите невырожденную квадратную матрицу-ключ:\n')
-    key = np.matrix(first_key)
+    first_key = input(f'\nВведите первую невырожденную квадратную матрицу-ключ:\n')
+    key.append(np.matrix(first_key))
+    print(f'Обратная матрица:\n{np.linalg.inv(key[0])}')
 
-    if round(np.linalg.det(key), 3) == 0 or key.shape[0] != key.shape[1] or \
-            round(np.linalg.det(key), 3) != 1 and euclid_alg(int(np.linalg.det(key)), len(alphabet_text)) != 1:
-        print("\nОшибка, неверный ключ")
+    second_key = input(f'\nВведите вторую невырожденную квадратную матрицу-ключ:\n')
+    key.append(np.matrix(first_key))
+    print(f'Обратная матрица:\n{np.linalg.inv(key[1])}')
+
+    if round(np.linalg.det(key[0]), 3) == 0 or key[0].shape[0] != key[0].shape[1] or \
+            round(np.linalg.det(key[0]), 3) != 1 and math.gcd(int(np.linalg.det(key[0]))%len(alphabet_text),
+                                                              len(alphabet_text)) != 1:
+        print("\nОшибка, неверный первый ключ")
         exit()
 
-    block_len = key.shape[0]
+    if round(np.linalg.det(key[1]), 3) == 0 or key[1].shape[0] != key[1].shape[1] or \
+            round(np.linalg.det(key[1]), 3) != 1 and math.gcd(int(np.linalg.det(key[1]))%len(alphabet_text),
+                                                              len(alphabet_text)) != 1:
+        print("\nОшибка, неверный второй ключ")
+        exit()
+
+    if key[0].shape[0] != key[1].shape[0]:
+        print("\nОшибка, разные ранги ключей")
+        exit()
+
+    block_len = key[0].shape[0]
 
     if operation == 1:
         plain_text = input(f'\nВведите открытый текст, состоящий из символов "{alphabet_text}": \n')

@@ -1,3 +1,4 @@
+import math
 import numpy as np
 
 english_alphabet = 'abcdefghijklmnopqrstuvwxyz'
@@ -28,27 +29,6 @@ def num_to_text(num):
     return text
 
 
-def euclid_alg(a: int, p: int) -> int:
-    """return modular inverse of A mod P"""
-    y2 = 0
-    y1 = 1
-    if a > p:
-        c = a
-        a = p
-        p = c
-    r = None
-    while r != 0:
-        q = p // a
-        r = p % a
-        y = y2 - q * y1
-        p = a
-        a = r
-        y2 = y1
-        y1 = y
-
-    return y2
-
-
 def encode(text_to_encode: str) -> str:
     """encode text_to_encode and return encryption_text"""
     encryption_text = ''
@@ -58,7 +38,7 @@ def encode(text_to_encode: str) -> str:
         matrix_text = np.matrix(text_block).T
         num = key.dot(matrix_text.astype(int))
         encryption_text += num_to_text(num)
-        i+=1
+        i += 1
     return encryption_text
 
 
@@ -93,9 +73,11 @@ if __name__ == '__main__':
 
     first_key = input(f'\nВведите невырожденную квадратную матрицу-ключ:\n')
     key = np.matrix(first_key)
+    print(f'Обратная матрица:\n{np.linalg.inv(key)}')
 
     if round(np.linalg.det(key), 3) == 0 or key.shape[0] != key.shape[1] or \
-            round(np.linalg.det(key), 3) != 1 and euclid_alg(int(np.linalg.det(key)), len(alphabet_text)) != 1:
+            (round(np.linalg.det(key), 3) != 1 and math.gcd(int(np.linalg.det(key))%len(alphabet_text),
+                                                             len(alphabet_text)) != 1):
         print("\nОшибка, неверный ключ")
         exit()
 
