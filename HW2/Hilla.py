@@ -4,8 +4,8 @@ import numpy as np
 english_alphabet = 'abcdefghijklmnopqrstuvwxyz'
 russian_alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
 alphabet_text = ''
-
-
+#1 2 -1; 0 2 3; 1 5 4
+жяёшкакёеищм
 def text_to_num(text):
     num_text = []
     for i in text:
