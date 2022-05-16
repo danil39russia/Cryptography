@@ -46,7 +46,7 @@ for i in range (0, int(a)):
         l = len(encode_text[::int(a)])
         seq_lett[n] = x / l
     seq = (alphabet_text.find(max(seq_lett, key=seq_lett.get)) - alphabet_text.find("e"))
-    print(f'смещение равно {seq}')
+    print(f'для {i} символа смещение равно {seq}')
     z = 0
     while i+z*int(a) < len(decode_text):
         decode_text[i+z*int(a)] -= seq
@@ -63,4 +63,4 @@ while i+z*int(a) < len(decode_text):
     decode_text[i+z*int(a)] += 15
     z += 1
 
-print(num_to_text(decode_text))
+print(f'полученный текст \n{num_to_text(decode_text)}')

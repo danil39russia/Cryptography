@@ -29,11 +29,7 @@ def encode(text_to_encode: str) -> str:
     num_text_to_encode = text_to_num(text_to_encode)
     for i in range(0, len(text_to_encode)):
         encryption_text.append(num_text_to_encode[i] + key[i])
-        print(f'i{i}')
-        print(f'num_text_to_encode[i]{num_text_to_encode[i]}')
-        print(f'key[i]{key[i]}')
-        key.append((num_text_to_encode[i] + key[i])%len(alphabet_text))
-    print(key)
+        key.append((num_text_to_encode[i] + key[i]) % len(alphabet_text))
     return num_to_text(encryption_text)
 
 
@@ -46,8 +42,7 @@ def decode(text_to_decode: str) -> str:
     return num_to_text(decryption_text)
 
 
-#if __name__ == '__main__':
-while 1:
+if __name__ == '__main__':
     language = int(input('\n[1] Русский алфавит или [2] Английский алфавит \nВведите цифру нужного алфавита: '))
     if language == 1:
         alphabet_text = russian_alphabet
