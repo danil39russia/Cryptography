@@ -64,12 +64,10 @@ if __name__ == '__main__':
         while len(plain_text) - len(key) > 0:
             key += key1
         key = text_to_num(key)
-        print(key)
         print(f'\nПолученный шифр текст:\n{encode(plain_text)}')
     else:
         plain_text = input(f'\nВведите шифр текст, состоящий из символов "{alphabet_text}":\n')
         while len(plain_text) - len(key) > 0:
             key += key1
         key = text_to_num(key)
-        print(key)
         print(f'\nПолученный открытый текст:\n{decode(plain_text)}')
