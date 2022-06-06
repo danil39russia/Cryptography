@@ -7,6 +7,7 @@ russian_alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыь
 alphabet_text = ''
 e, d, n = 17, 1817, 2479
 
+
 def fast_test_f(it_num: int, exp: int):
     bin_exp = bin(exp - 1)
     for i in range(it_num):
@@ -80,8 +81,8 @@ def encode(text: str, key_e: int, key_n: int):
         text = '0' + text
     print(text)
     i = 0
-    while (i+1)*len_enc <= len(text):
-        encode_text += (str(bin(fast_exp(int(text[(i*len_enc):((i+1)*len_enc)], 2), key_e, key_n))[2:]))
+    while (i + 1) * len_enc <= len(text):
+        encode_text += (str(bin(fast_exp(int(text[(i * len_enc):((i + 1) * len_enc)], 2), key_e, key_n))[2:]))
         encode_text += ' '
         i += 1
     return encode_text
@@ -92,10 +93,11 @@ def decode(text, key_d: int, key_n: int):
     decode_text = ''
     for i in text:
         decode_text += str(bin(fast_exp(int(i, 2), key_d, key_n))[2:]).rjust(len_enc, '0')
-    print(decode_text[-16*(len(decode_text) // 16)::])
-    decode_text = decode_text[-16*(len(decode_text) // 16)::]
-    s = ''.join(chr(int(decode_text[i * 16: i * 16+16], 2)) for i in range(len(decode_text) // 16))
+    print(decode_text[-16 * (len(decode_text) // 16)::])
+    decode_text = decode_text[-16 * (len(decode_text) // 16)::]
+    s = ''.join(chr(int(decode_text[i * 16: i * 16 + 16], 2)) for i in range(len(decode_text) // 16))
     return s
+
 
 while __name__ == '__main__':
     '''
@@ -127,13 +129,12 @@ while __name__ == '__main__':
         print(f'\nПара открытый ключ: {e, n}\n'
               f'Пара закрытый ключ: {d, n}')
 
-
     if operation == 1:
         if key_operation == 2:
             key = input('\nВведите пару открытого ключа через пробел: ').split()
             e, n = int(key[0]), int(key[1])
         plain_text = input(f'\nВведите открытый текст: \n')
-        bits_text = ''.join([bin(ord(c))[2:].rjust(16,'0') for c in plain_text])
+        bits_text = ''.join([bin(ord(c))[2:].rjust(16, '0') for c in plain_text])
         print(bits_text)
         print(f'\nПолученный шифр текст:\n{encode(bits_text, e, n)}')
     else:
@@ -141,6 +142,4 @@ while __name__ == '__main__':
             key = input('\nВведите пару закрытого ключа через пробел: ').split()
             d, n = int(key[0]), int(key[1])
         plain_text = input(f'\nВведите закрытый текст: \n').split()
-        #bits_text = ''.join([bin(ord(c))[2:] for c in plain_text])
         print(f'\nПолученный открытый текст:\n{decode(plain_text, d, n)}')
-
