@@ -1,10 +1,11 @@
 import random
 import time
 import math
-
+'''
 english_alphabet = 'abcdefghijklmnopqrstuvwxyz'
 russian_alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
 alphabet_text = ''
+'''
 e, d, n = 17, 1817, 2479
 
 
